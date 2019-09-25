@@ -98,7 +98,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "Product"
+					"table": "ProductCategory"
 				}
 			},
 			"dependsOn": [
@@ -147,8 +147,34 @@
 								"type": "TabularTranslator",
 								"mappings": [
 									{
-										"source": {},
-										"sink": {}
+										"source": {
+											"name": "ProductCategoryID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ProductCategoryID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentProductCategoryID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ParentProductCategoryID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Name",
+											"type": "String"
+										}
 									}
 								]
 							}
