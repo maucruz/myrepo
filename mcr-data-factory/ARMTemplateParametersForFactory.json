@@ -5,13 +5,16 @@
 		"factoryName": {
 			"value": "mcr-data-factory"
 		},
-		"sqlservicemcr_connectionString": {
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage2_connectionString": {
 			"value": ""
 		},
 		"AzureSqlDW1_connectionString": {
 			"value": ""
 		},
-		"AzureBlobStorage1_connectionString": {
+		"sqlservicemcr_connectionString": {
 			"value": ""
 		}
 	}
