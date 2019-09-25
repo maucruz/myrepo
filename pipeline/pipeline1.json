@@ -35,7 +35,69 @@
 						}
 					},
 					"translator": {
-						"type": "TabularTranslator"
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ProductCategoryID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ProductId",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ParentProductCategoryID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "EnglishProductName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Color",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "Size",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "Weight",
+									"type": "Int32"
+								}
+							},
+							{
+								"sink": {
+									"name": "DaysToManufacture",
+									"type": "Int32"
+								}
+							},
+							{
+								"sink": {
+									"name": "Class",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "Style",
+									"type": "String"
+								}
+							}
+						]
 					}
 				},
 				"inputs": [
