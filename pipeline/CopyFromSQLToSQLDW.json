@@ -1,0 +1,224 @@
+{
+	"name": "CopyFromSQLToSQLDW",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_q3l",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_q3l",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "SalesLT.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "SalesLT.@{item().destination.table}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource"
+								},
+								"sink": {
+									"type": "SqlDWSink",
+									"allowPolyBase": true,
+									"preCopyScript": {
+										"value": "@item().copySink.preCopyScript",
+										"type": "Expression"
+									},
+									"polyBaseSettings": {
+										"rejectValue": 0,
+										"rejectType": "value",
+										"useTypeDefault": false
+									}
+								},
+								"enableStaging": true,
+								"stagingSettings": {
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorage2",
+										"type": "LinkedServiceReference"
+									}
+								},
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_q3l",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_q3l",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().destination.table"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "ProductCategory"
+						},
+						"destination": {
+							"table": "ProductCategory"
+						},
+						"copySink": {
+							"preCopyScript": "BEGIN TRY\nIF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SalesLT') EXEC('Create Schema [SalesLT]');\nEND TRY\nBEGIN CATCH\nif ERROR_NUMBER() <> 2714 throw;\nEND CATCH\n\nIF OBJECT_ID('[SalesLT].[ProductCategory]', 'U') IS NULL CREATE TABLE [SalesLT].[ProductCategory] ([ProductCategoryID] int,\n[ParentProductCategoryID] int,\n[Name] nvarchar(50),\n[rowguid] uniqueidentifier,\n[ModifiedDate] datetime);\n"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "Int32",
+											"name": "ProductCategoryID"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "ProductCategoryID"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "ParentProductCategoryID"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "ParentProductCategoryID"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Name"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Name"
+										}
+									},
+									{
+										"source": {
+											"type": "Guid",
+											"name": "rowguid"
+										},
+										"sink": {
+											"type": "Guid",
+											"name": "rowguid"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "ModifiedDate"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "ModifiedDate"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "ProductDescription"
+						},
+						"destination": {
+							"table": "ProductDescription"
+						},
+						"copySink": {
+							"preCopyScript": "BEGIN TRY\nIF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SalesLT') EXEC('Create Schema [SalesLT]');\nEND TRY\nBEGIN CATCH\nif ERROR_NUMBER() <> 2714 throw;\nEND CATCH\n\nIF OBJECT_ID('[SalesLT].[ProductDescription]', 'U') IS NULL CREATE TABLE [SalesLT].[ProductDescription] ([ProductDescriptionID] int,\n[Description] nvarchar(400),\n[rowguid] uniqueidentifier,\n[ModifiedDate] datetime);\n"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "Int32",
+											"name": "ProductDescriptionID"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "ProductDescriptionID"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Description"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Description"
+										}
+									},
+									{
+										"source": {
+											"type": "Guid",
+											"name": "rowguid"
+										},
+										"sink": {
+											"type": "Guid",
+											"name": "rowguid"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "ModifiedDate"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "ModifiedDate"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
