@@ -43,7 +43,7 @@
 									"type": "Int32"
 								},
 								"sink": {
-									"name": "ProductId",
+									"name": "ProductCategoryID",
 									"type": "Int32"
 								}
 							},
@@ -53,8 +53,8 @@
 									"type": "Int32"
 								},
 								"sink": {
-									"name": "EnglishProductName",
-									"type": "String"
+									"name": "ParentProductCategoryID",
+									"type": "Int32"
 								}
 							},
 							{
@@ -63,37 +63,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "Color",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "Size",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "Weight",
-									"type": "Int32"
-								}
-							},
-							{
-								"sink": {
-									"name": "DaysToManufacture",
-									"type": "Int32"
-								}
-							},
-							{
-								"sink": {
-									"name": "Class",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "Style",
+									"name": "Name",
 									"type": "String"
 								}
 							}
