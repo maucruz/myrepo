@@ -1,0 +1,16 @@
+{
+	"name": "ProductCategory",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sqlservicemcr",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": "ProductCategory"
+		}
+	}
+}
